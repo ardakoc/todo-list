@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from base.models import Task
 
@@ -17,30 +18,30 @@ class Login(LoginView):
     return reverse_lazy('tasks')
 
 
-class TaskList(ListView):
+class TaskList(LoginRequiredMixin, ListView):
   model = Task
   context_object_name = 'tasks'
 
 
-class TaskDetail(DetailView):
+class TaskDetail(LoginRequiredMixin, DetailView):
   model = Task
   context_object_name = 'task'
   template_name = 'base/task.html'
 
 
-class CreateTask(CreateView):
+class CreateTask(LoginRequiredMixin, CreateView):
   model = Task
   fields = '__all__'
   success_url = reverse_lazy('tasks')
 
 
-class UpdateTask(UpdateView):
+class UpdateTask(LoginRequiredMixin, UpdateView):
   model = Task
   fields = '__all__'
   success_url = reverse_lazy('tasks')
 
 
-class DeleteTask(DeleteView):
+class DeleteTask(LoginRequiredMixin, DeleteView):
   model = Task
   context_object_name = 'task'
   success_url = reverse_lazy('tasks')
