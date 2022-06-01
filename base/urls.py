@@ -1,4 +1,3 @@
-from django import views
 from django.urls import path
 from .views import Login, Register, CreateTask, DeleteTask, TaskDetail, TaskList, UpdateTask
 
